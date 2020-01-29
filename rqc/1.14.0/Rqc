@@ -1,0 +1,35 @@
+#!/usr/bin/env Rscript
+library(optparse)
+
+opt <- parse_args(OptionParser(option_list = list(
+    make_option("--files", type = "character"),
+    make_option("--groups", type = "character"),
+    make_option("--sample", type = "logical", action = "store_true", default = TRUE),
+    make_option("--reads", type = "integer", default = 1000000),
+    make_option("--workers", type = "integer", default = 1),
+    make_option("--report_file", type = "character", default = "rqc_report"),
+    make_option("--rds_file", type = "character", default = "rqc.rds")
+)))
+
+if (is.null(opt$files)) {
+    stop("No --files provided.")
+} else {
+    files <- strsplit(opt$files, ",")[[1]]
+}
+
+if (is.null(opt$groups)) {
+    stop("No --groups provided.")
+} else {
+    groups <- strsplit(opt$groups, ",")[[1]]
+}
+
+sample <- opt$sample
+n <- opt$reads
+workers <- opt$workers
+
+suppressPackageStartupMessages(library(Rqc))
+qa <- rqcQA(files, sample, n, groups, workers = workers)
+options(bitmapType="cairo")
+rqcReport(qa, outdir = ".", file = opt$report_file)
+
+saveRDS(qa, opt$rds_file)
