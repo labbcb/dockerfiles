@@ -32,3 +32,12 @@ Dockerfiles are tagged according to tool version.
 | TrimGalore!   | A wrapper tool around Cutadapt and FastQC to consistently apply quality and adapter trimming to FastQ files       |
 | VCFTools      | Program package designed for working with VCF files                                                               |
 
+
+Build  Docker images and push to DockerHub
+
+The command below builds and pushes Docker images to DockerHub.
+Images are tagged with tool versions.
+
+```bash
+bash build_images.sh
+```
