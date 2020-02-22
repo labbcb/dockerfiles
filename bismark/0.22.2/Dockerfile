@@ -63,10 +63,9 @@ RUN apt-get update \
   && curl -fsSL https://github.com/FelixKrueger/Bismark/archive/${BISMARK_VERSION}.tar.gz -o bismark.tar.gz \
   && mkdir bismark \
   && tar xf bismark.tar.gz -C bismark --strip-components=1 \
-  && cd bismark \
-  && cp bam2nuc bismark bismark2bedGraph bismark2report bismark2summary bismark_genome_preparation bismark_methylation_extractor copy_bismark_files_for_release.pl coverage2cytosine deduplicate_bismark filter_non_conversion NOMe_filtering /usr/local/bin/ \
+  && cp -r bismark/* /usr/local/bin/ \
   && cd .. \
-  && rm -rf bismark* samtools* bowtie* bowtie2* hisat2-* htslib* \
+  && rm -rf bismark* samtools* bowtie* bowtie2* hisat2-* hisat2.zip htslib* \
   && apt-get remove --yes \
     curl \
     ca-certificates \
